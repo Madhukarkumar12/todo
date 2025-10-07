@@ -19,19 +19,25 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      # 3️⃣ Install PNPM globally (ensures pnpm command is available)
-      - name: Install PNPM
-        run: npm install -g pnpm@8
+      # 3️⃣ Setup PNPM using official action
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-      # 4️⃣ Install dependencies
+      # 4️⃣ Ensure PNPM is in PATH
+      - name: Verify PNPM
+        run: pnpm --version
+
+      # 5️⃣ Install dependencies
       - name: Install dependencies
         run: pnpm install
 
-      # 5️⃣ Build the app
+      # 6️⃣ Build the app
       - name: Build
         run: pnpm build
 
-      # 6️⃣ Deploy to Firebase Hosting
+      # 7️⃣ Deploy to Firebase Hosting
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
